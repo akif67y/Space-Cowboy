@@ -374,6 +374,7 @@ void drawhomepage(){
 	are.check = 0;
 	hero.health = 100;
 	score = 0;
+	len = 0;
     iSetColor(128, 128, 128);
 	iFilledRectangle(0,0,1000,600);
 	iShowBMP2(0,0,"bmp_outputs//home.bmp", 0);
@@ -959,7 +960,7 @@ sorted = 1;
 }
 	
 
-iSetColor(0,0,255);
+iSetColor(255,0,0);
 for(int l = 0; l < 5; l++ ){
 	char display[1000];
 	sprintf(display, "%s", entry[l].name);

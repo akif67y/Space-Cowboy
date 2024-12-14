@@ -15,3 +15,7 @@ akif 180
 Swapno 1070
 Spike 1130
 dd 500
+Akif 2160
+Akif 100
+hey 10
+ryan gosling 170
