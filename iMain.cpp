@@ -1,16 +1,19 @@
 #include "iGraphics.h"
-// #include "bitmap_loader.h"
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
-# pragma comment(lib, "Winmm.lib")
-# include<mmsystem.h>
+
 
 // boulder gular x change na kore asteriod gular koro
 
-int x = 0, y = 0, r = 20; // k = count of enemy
+ // k = count of enemy
+
+
+#define MAX 100
+
 void drawhomepage();
 void drawStartpage();
 void drawAboutpage();
@@ -27,22 +30,23 @@ void asteriodgenerate();
 void healthcollision();
 void drawGameoverpage();
 void savescore(char newplayer[], int len);
-
-// void rocketbullet();
 void drawarena2();
 void spaceshipgenerate();
+
+
+
 bool music_on = true;
 int healthcount = 0;
 int boostcount = 0;
-// char lobby_sound[30]="bmp_outputs\\lobby.wav";
-// void boroboulderdraw();
+
 typedef struct{
 	char name[100];
 	int score;
 }man;
+
 int random = 0;
-#define MAX 100
 man entry[MAX];
+
 int sorted = 0;
 int gunpower = 10;
 int damage = 10;
@@ -60,6 +64,7 @@ typedef struct{
 	int place;
 	int check;
 }arena;
+
 typedef struct {
 	int shiptype;
 	int check;
@@ -67,9 +72,11 @@ typedef struct {
 }ship;
 arena are ;
 ship shi;
+
 int bouldernumber = 0;
 int gamestate = 1;
 int createBullet = 0;
+
 typedef struct play{
 	int x;
 	int y;
@@ -111,8 +118,7 @@ player boulderCoordinate[3];
 
 char point[10000];
 void scoreshower(){
-	// iSetColor(129,128,128);
-	// iFilledRectangle(100, 500, 100, 40);
+	
 
     sprintf(point,"Score : %d", score);
 	iSetColor(255,0,0);
@@ -121,9 +127,7 @@ void scoreshower(){
 }
 
 void healthchecker(){
-	// iSetColor(129,128,128);
-	// iFilledRectangle(700, 500, 100, 40);
-
+	
     sprintf(point,"Health : %d", hero.health);
 	iSetColor(255,0,0);
 	iText(857, 487, point, GLUT_BITMAP_HELVETICA_18);
@@ -268,9 +272,7 @@ void iMouse(int button, int state, int mx, int my) {
 }
 
 void iKeyboard(unsigned char key) {
-	// if (key == 'k') {
-	// 	createBullet = 1;
-	// }
+	
 	if(gamestate == 6 || gamestate == 7){
 		if(key == '\b'){
 			gamestate = 1;
@@ -338,17 +340,7 @@ void iKeyboard(unsigned char key) {
 	*/
 void iSpecialKeyboard(unsigned char key) {
 
-	// if (key == GLUT_KEY_F1) {
-	// 	if(music_on == true){
-	// 		music_on = false;
-	// 		PlaySound(0,0,0);
-	// 	}
-	// 	else if(music_on == false){
-	// 		music_on = true;
-	// 		PlaySound(TEXT("bmp_outputs\\lobby.wav") , NULL ,SND_LOOP | SND_ASYNC);
-			
-	// 	}
-	// }
+	
 	
 }
 void drawGameoverpage(){
@@ -374,9 +366,7 @@ void drawArenapage(){
 	iShowBMP2(10, 5, "bmp_outputs//ship1.bmp", 0);
 	iShowBMP2(672, 5, "bmp_outputs//ship2.bmp", 0);
 
-	// iSetColor(225,225,225);
-	// iText(426, 570, "ARENA", GLUT_BITMAP_TIMES_ROMAN_24);
-	// iText(410, 255, "SHIP", GLUT_BITMAP_TIMES_ROMAN_24);
+	
 
 }
 void drawhomepage(){
@@ -403,12 +393,11 @@ void drawhomepage(){
 void spaceshipgenerate(){  //
 	
 	if(gamestate == 7){
-		// srand(time)
-		// random++;
+		
 		
 		
 		for(int j = 0; j < 2 ; j++){  // generating boulder at the start
-			// if(k == p) break;
+			
 			if(rocket[j].health <= 0){
 
 			rocket[j].health = 100;
@@ -422,8 +411,7 @@ void spaceshipgenerate(){  //
 				rocket[j].y = 490;
 
 			}
-			// printf("%d", j);
-			// k++;
+			
 			}
 		
 		}
