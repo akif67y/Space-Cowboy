@@ -239,6 +239,21 @@ void iMouse(int button, int state, int mx, int my) {
 				gamestate = 1;
 			}
 		}
+		else if(gamestate == 4){
+			if((mx >= 270 && mx <= 460) && (my >= 260 && my <= 380)){
+				if(music_on == false){
+					music_on = true;
+					PlaySound(TEXT("music.wav"), NULL , SND_LOOP|SND_ASYNC);
+
+				}
+			}
+			if((mx >= 540 && mx <= 720) && (my >= 260 && my <= 380)){
+				if(music_on == true){
+					music_on = false; 
+					PlaySound(0,0,0);
+				}
+			}
+		}
 
 		
 	}
@@ -846,7 +861,7 @@ if(gamestate == 6){
 void drawMusicpage(){
 	iSetColor(128,128,128);
 	iFilledRectangle(0,0,1000,600);
-   
+   	iShowBMP2(0,0,"bmp_outputs//musicpage.bmp",0);
 }
 void drawAboutpage(){
 
@@ -1128,8 +1143,10 @@ int main() {
 	iSetTimer(500, asteriodgenerate);
 	iSetTimer(200, spaceshipgenerate);
 	//place your own initialization codes here.
+		if(music_on){
+			PlaySound(TEXT("music.wav"), NULL , SND_LOOP|SND_ASYNC);
+		}
 		
-		PlaySound(TEXT("music.wav"), NULL , SND_LOOP|SND_ASYNC);
 	
 	
 	iInitialize(1000, 600, "SPACE COWBOY");
