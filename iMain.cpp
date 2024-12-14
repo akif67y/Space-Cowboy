@@ -38,6 +38,7 @@ typedef struct{
 	char name[100];
 	int score;
 }man;
+int random = 0;
 #define MAX 100
 man entry[MAX];
 int sorted = 0;
@@ -90,6 +91,7 @@ typedef struct {
 
 object shild, helth, boost;
 char newplayer[100] = "";
+char showname[100] = "";
 int len = 0;
 
 
@@ -107,22 +109,22 @@ player boulderCoordinate[3];
 
 char point[10000];
 void scoreshower(){
-	iSetColor(129,128,128);
-	iFilledRectangle(100, 500, 100, 40);
+	// iSetColor(129,128,128);
+	// iFilledRectangle(100, 500, 100, 40);
 
     sprintf(point,"Score : %d", score);
 	iSetColor(255,0,0);
-	iText(110, 520, point, GLUT_BITMAP_HELVETICA_10);
+	iText(857, 535, point, GLUT_BITMAP_HELVETICA_18);
 
 }
 
 void healthchecker(){
-	iSetColor(129,128,128);
-	iFilledRectangle(700, 500, 100, 40);
+	// iSetColor(129,128,128);
+	// iFilledRectangle(700, 500, 100, 40);
 
     sprintf(point,"Health : %d", hero.health);
 	iSetColor(255,0,0);
-	iText(710, 520, point, GLUT_BITMAP_HELVETICA_10);
+	iText(857, 487, point, GLUT_BITMAP_HELVETICA_18);
 
 }
 void savescore(char newplayer[], int len){
@@ -208,7 +210,7 @@ void iMouse(int button, int state, int mx, int my) {
 				are.place = 1;
 				are.check = 1;
 			}
-			if((mx > 430 && mx < 830) && (my > 275 && my < 550)){
+			if((mx > 542 && mx < 942) && (my > 275 && my < 550)){
 				are.place = 2;
 				are.check = 1;
 			}
@@ -216,7 +218,7 @@ void iMouse(int button, int state, int mx, int my) {
 				shi.shiptype = 1;
 				shi.check = 1;
 			}
-			if((mx > 285 && mx < 553) && (my > 5 && my < 270)){
+			if((mx > 672 && mx < 940) && (my > 5 && my < 270)){
 				shi.shiptype = 2;
 				shi.check = 1;
 			}
@@ -263,15 +265,14 @@ void iMouse(int button, int state, int mx, int my) {
 	}
 }
 
-/*
-	function iKeyboard() is called whenever the user hits a key in keyboard.
-	key- holds the ASCII value of the key pressed.
-	*/
 void iKeyboard(unsigned char key) {
 	// if (key == 'k') {
 	// 	createBullet = 1;
 	// }
 	if(gamestate == 6 || gamestate == 7){
+		if(key == '\b'){
+			gamestate = 1;
+		}
 	if( key == 'd'){
 		int t = hero.x + 10;
 		if(t > 900){
@@ -293,26 +294,37 @@ void iKeyboard(unsigned char key) {
 	else if(gamestate == 8){
 		if(key != '\b' && key != '\r'){
 			newplayer[len] = key;
+			showname[len] = key;
 			newplayer[len + 1] = '\0';
+			showname[len + 1] = '\0';
 			len++;
 		}
 		else if( key == '\b' ){
 			if(len >= 0){
 				newplayer[len - 1] = '\0'; 
+				showname[len - 1] = '\0'; 
 				len--;
 			}
 		}
 		else if( key == '\r'){
-			savescore(newplayer, len);;
+			savescore(newplayer, len);
+			strcpy(showname, "");
 
 		}
 
 	}
+	else if(gamestate == 2 || gamestate == 3 || gamestate == 4 || gamestate == 5){
+		if(key == '\b'){
+			gamestate = 1;
+		}
+	}
+
+
+	
 	
 		
 	
 }
-
 /*
 	function iSpecialKeyboard() is called whenver user hits special keys like-
 	function keys, home, end, pg up, pg down, arraows etc. you have to use
@@ -344,25 +356,25 @@ void drawGameoverpage(){
 	iShowBMP2(0,500,"bmp_outputs//idolo.bmp",1321060);
 
 	iSetColor(255,0,0);
-	iText(500,200, "Enter your name :", GLUT_BITMAP_HELVETICA_18);
-	iRectangle(500, 150, 150, 40);
-	iSetColor(0, 255, 0);
-	iText(500, 200, newplayer, GLUT_BITMAP_HELVETICA_18 );
+	iText(411,300, "Enter your name :", GLUT_BITMAP_HELVETICA_18);
+	iRectangle(411, 255, 150, 40);
+	iSetColor(255, 255, 255);
+	iText(414, 260, showname, GLUT_BITMAP_HELVETICA_18 );
 
 
 }
 void drawArenapage(){
 	iSetColor(128,128,128);
 	iFilledRectangle(0,0,1000,600);
-	iShowBMP2(0,0,"bmp_outputs//home.bmp",0);
+	iShowBMP2(0,0,"bmp_outputs//arenanew.bmp",0);
 	iShowBMP2(10, 275,"bmp_outputs//arena1formenu.bmp",0);
-	iShowBMP2(430, 275, "bmp_outputs//arena2formenu.bmp", 0);
+	iShowBMP2(542, 275, "bmp_outputs//arena2formenu.bmp", 0);
 	iShowBMP2(10, 5, "bmp_outputs//ship1.bmp", 0);
-	iShowBMP2(285, 5, "bmp_outputs//ship2.bmp", 0);
+	iShowBMP2(672, 5, "bmp_outputs//ship2.bmp", 0);
 
-	iSetColor(225,225,225);
-	iText(10, 560, "ARENA", GLUT_BITMAP_TIMES_ROMAN_24);
-	iText(10, 260, "SHIP", GLUT_BITMAP_TIMES_ROMAN_24);
+	// iSetColor(225,225,225);
+	// iText(426, 570, "ARENA", GLUT_BITMAP_TIMES_ROMAN_24);
+	// iText(410, 255, "SHIP", GLUT_BITMAP_TIMES_ROMAN_24);
 
 }
 void drawhomepage(){
@@ -387,10 +399,12 @@ void drawhomepage(){
 
 }
 void spaceshipgenerate(){  //
-	// srand(time(NULL));
+	
 	if(gamestate == 7){
 		// srand(time)
-	
+		// random++;
+		
+		
 		for(int j = 0; j < 2 ; j++){  // generating boulder at the start
 			// if(k == p) break;
 			if(rocket[j].health <= 0){
@@ -426,6 +440,9 @@ void spaceshipgenerate(){  //
 		else if(rocket[i].move == -1) {
 			rocket[i].x = rocket[i].x - 20  ;
 		}
+		// else if(rocket[i].move == 0){
+
+		// }
 		if(i == 0){
 		if(rocket[i].x < 10){
 			rocket[i].x = 10 ;
@@ -435,6 +452,10 @@ void spaceshipgenerate(){  //
 			rocket[i].x = 445;
 			rocket[i].move = -1;
 		}
+		// else if(random % 50 == 0){
+		// 	random++;
+		// 	rocket[i].move = 0;
+		// }
 
 		}
 		else if( i == 1){
@@ -446,6 +467,10 @@ void spaceshipgenerate(){  //
 			rocket[i].x = 900;
 			rocket[i].move = -1;
 		}
+		// else if(random % 50 == 0){
+		// 	random++;
+		// 	rocket[i].move = 0;
+		// }
 
 		}
 	
@@ -568,7 +593,10 @@ void collisionship(){
 			if(bouldercheck[j] == 1){
 				if(( boulderCoordinate[j].x + 60 >= hero.x && boulderCoordinate[j].x <= hero.x + 105) &&( boulderCoordinate[j].y <= hero.y + 80 )){
 					hero.health -= damage /2;
-					iShowBMP2(boulderCoordinate[j].x, boulderCoordinate[j].y, "bmp_outputs//collision.bmp",0);
+					if(damagecount == 0){
+						iShowBMP2(boulderCoordinate[j].x , boulderCoordinate[j].y , "bmp_outputs//collision.bmp",0);
+					}
+					
 					boulderCoordinate[j].health = 0;
 				}
 			}
@@ -582,7 +610,10 @@ for(int i = 0; i < 2; i++){
 		if(rocket[i].bulletcheck[j] != 0 && rocket[i].bulletcheck[j] != -1){
 
 					if((rocket[i].bulletcheck[j] >= hero.x && rocket[i].bulletcheck[j] <= hero.x + 100) &&( (j * 20 >= hero.y && j * 20 <= hero.y + 70) )){
-						iShowBMP2(hero.x, hero.y, "bmp_outputs//collision.bmp",0);
+						if(damagecount == 0){
+							iShowBMP2(hero.x + 45, hero.y + 50, "bmp_outputs//collision.bmp",0);
+						}
+						
 						hero.health -= damage / 5;
 						rocket[i].bulletcheck[j] = -1;	
 					}
@@ -672,7 +703,7 @@ void drawarena2(){
 
 		if(rocket[i].bulletcheck[j] != 0 && rocket[i].bulletcheck[j] != -1){  // 0 for out of screen and -1 for hitting the plane
 			
-			iShowBMP2(rocket[i].bulletcheck[j], j * 20, "bmp_outputs//sbullet.bmp", 0);  //showing the bullets where they are for every rocket
+			iShowBMP2(rocket[i].bulletcheck[j], j * 20, "bmp_outputs//bullet.bmp", 0);  //showing the bullets where they are for every rocket
 			
 		}
 		
@@ -855,22 +886,23 @@ if(gamestate == 6){
 
 
 
-
-
-
 void drawMusicpage(){
 	iSetColor(128,128,128);
 	iFilledRectangle(0,0,1000,600);
    	iShowBMP2(0,0,"bmp_outputs//musicpage.bmp",0);
 }
 void drawAboutpage(){
+	iSetColor(128,128,128);
+	iFilledRectangle(0,0,1000,600);
+		iShowBMP2(0,0,"bmp_outputs//about.bmp",0);
+
 
 }
 void drawScorepage(){ 
 	iSetColor(128,128,128);
 	iFilledRectangle(0,0,1000,600);
 	
-	iShowBMP2(0,0,"bmp_outputs//home.bmp",0);
+	iShowBMP2(0,0,"bmp_outputs//l.bmp",0);
 		
 	
 	 //etar operation gulo ekbar kora dorker, show hobe barbar;
@@ -913,12 +945,19 @@ sorted = 1;
 }
 	
 
-iSetColor(255,0,0);
+iSetColor(0,0,255);
 for(int l = 0; l < 5; l++ ){
 	char display[1000];
-	sprintf(display, "%s %d", entry[l].name, entry[l].score);
-	int x = 300;
-	int y = 500 - 110 * l;
+	sprintf(display, "%s", entry[l].name);
+	int x = 225;
+	int y = 480 - 100 * l;
+	iText(x,y,display, GLUT_BITMAP_HELVETICA_18);
+}
+for(int l = 0; l < 5; l++ ){
+	char display[1000];
+	sprintf(display, "%d", entry[l].score);
+	int x = 750;
+	int y = 480 - 100 * l;
 	iText(x,y,display, GLUT_BITMAP_HELVETICA_18);
 }
 
@@ -1012,7 +1051,10 @@ for(int i = 0; i < 60; i++){
 			if(bouldercheck[j] == 1){
 				if(( boulderCoordinate[j].x + 60 >= hero.x && boulderCoordinate[j].x <= hero.x + 105) &&( boulderCoordinate[j].y <= hero.y + 80 )){
 					hero.health -= damage;
-					iShowBMP2(boulderCoordinate[j].x, boulderCoordinate[j].y, "bmp_outputs//collision.bmp",0);
+					if(damagecount == 0){
+						iShowBMP2(boulderCoordinate[j].x, boulderCoordinate[j].y, "bmp_outputs//collision.bmp",0);
+					}
+					
 					boulderCoordinate[j].health = 0;
 				}
 			}
@@ -1121,7 +1163,10 @@ void collisionCheck2(){
 		for(int j = 0; j < 4; j++){
 				if(( now[j].x + 60 >= hero.x && now[j].x <= hero.x + 105) &&(  now[j].y <= hero.y + 80 )){
 					hero.health -= damage;
-					iShowBMP2(now[j].x,now[j].y, "bmp_outputs//collision.bmp",0);
+					if(damagecount == 0){
+						iShowBMP2(hero.x + 45, hero.y + 50, "bmp_outputs//collision.bmp",0);
+					}
+					
 					now[j].health = 0;
 				}
 			}
@@ -1140,8 +1185,8 @@ int main() {
 	
 	srand(time(NULL));
 	first();
-	iSetTimer(500, asteriodgenerate);
-	iSetTimer(200, spaceshipgenerate);
+	iSetTimer(300, asteriodgenerate);
+	iSetTimer(250, spaceshipgenerate);
 	//place your own initialization codes here.
 		if(music_on){
 			PlaySound(TEXT("music.wav"), NULL , SND_LOOP|SND_ASYNC);

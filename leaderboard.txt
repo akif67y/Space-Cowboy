@@ -3,6 +3,13 @@ aishi 205
 drim 250
 hey 210
 yes 640
-somaj 220akif2 800
+somaj 220
+akif2 800
 akif3 700
 shuvo 710
+akif23 190
+akif 480
+Ahnaf Akif 390
+Akif 200
+akif 180
+Swapno 1070
