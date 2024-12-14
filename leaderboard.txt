@@ -13,3 +13,4 @@ Ahnaf Akif 390
 Akif 200
 akif 180
 Swapno 1070
+Spike 1130

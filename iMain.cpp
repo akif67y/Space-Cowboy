@@ -32,6 +32,8 @@ void savescore(char newplayer[], int len);
 void drawarena2();
 void spaceshipgenerate();
 bool music_on = true;
+int healthcount = 0;
+int boostcount = 0;
 // char lobby_sound[30]="bmp_outputs\\lobby.wav";
 // void boroboulderdraw();
 typedef struct{
@@ -639,6 +641,8 @@ void healthcollision(){
 				damage = 0;
 				damagecount = 1000;
 				shild.status = 0;
+				iSetColor(255,0,0);
+				iText(450,450,"You have shield",GLUT_BITMAP_HELVETICA_12);
 			}
 		}
 
@@ -647,6 +651,7 @@ void healthcollision(){
 			if(( helth.x + 30 >= hero.x && helth.x <= hero.x + 105) &&( helth.y <= hero.y + 76  && helth.y + 30 >= hero.y)){
 				hero.health = hero.health + 100;
 				helth.status = 0;
+				healthcount = 100;
 			}
 		 }
 
@@ -655,6 +660,7 @@ void healthcollision(){
 			if(( boost.x + 30 >= hero.x && boost.x <= hero.x + 105) &&( boost.y <= hero.y + 76  && boost.y + 30>= hero.y)){
 				gunpower = gunpower + 5;
 				boost.status = 0;
+				boostcount = 100;
 			}
 		}
 	
@@ -709,6 +715,7 @@ void drawarena2(){
 		
 	}
 
+
 	if(helth.status == 1){
 		iShowBMP2(helth.x, helth.y, "bmp_outputs//health.bmp",0);
 	}
@@ -718,7 +725,16 @@ void drawarena2(){
 	if(boost.status == 1){
 		iShowBMP2(boost.x, boost.y, "bmp_outputs//booster_token.bmp",0);
 	}
-	
+		if(healthcount > 0){
+		iSetColor(255,0,0);
+		iText(450,450,"GOOD JOB! HEALTH + 100", GLUT_BITMAP_HELVETICA_12);
+		healthcount--;
+	}
+	if(boostcount > 0){
+		iSetColor(255,0,0);
+		iText(450,425,"GREAT! GUNPOWER + 5", GLUT_BITMAP_HELVETICA_12);
+		boostcount--;
+	}
 	collisionship();
 	healthcollision();
 	collisionshipresult();
@@ -762,6 +778,16 @@ void drawStartpage(){
 		
 		iShowBMP2(now[i].x, now[i].y, now[i].image, 0);
 	
+	}
+	if(healthcount > 0){
+		iSetColor(255,0,0);
+		iText(450,450,"GOOD JOB! HEALTH + 100", GLUT_BITMAP_HELVETICA_12);
+		healthcount--;
+	}
+	if(boostcount > 0){
+		iSetColor(255,0,0);
+		iText(450,425,"GREAT! GUNPOWER + 5", GLUT_BITMAP_HELVETICA_12);
+		boostcount--;
 	}
 	if(shild.status == 1){
 		iShowBMP2(shild.x, shild.y, "bmp_outputs//shield.bmp",0);
@@ -902,7 +928,7 @@ void drawScorepage(){
 	iSetColor(128,128,128);
 	iFilledRectangle(0,0,1000,600);
 	
-	iShowBMP2(0,0,"bmp_outputs//l.bmp",0);
+	iShowBMP2(0,0,"bmp_outputs//le.bmp",0);
 		
 	
 	 //etar operation gulo ekbar kora dorker, show hobe barbar;
@@ -1069,18 +1095,22 @@ for(int i = 0; i < 60; i++){
 				damage = 0;
 				damagecount = 1000;
 				shild.status = 0;
+				// iSetColor(255,0,0);
+				// iText(450,450,"You have shield",GLUT_BITMAP_HELVETICA_12);
 			}
 		}
 		if(helth.status == 1){
 			if(( helth.x + 30 >= hero.x && helth.x <= hero.x + 105) &&( helth.y <= hero.y + 30  && helth.y >= hero.y)){
 				hero.health = hero.health + 100;
 				helth.status = 0;
+				healthcount = 100;
 			}
 		}
 		if(boost.status == 1){
 			if(( boost.x + 30 >= hero.x && boost.x <= hero.x + 105) &&( boost.y <= hero.y + 30  && boost.y >= hero.y)){
 				gunpower = gunpower + 5;
 				boost.status = 0;
+				boostcount = 100;
 			}
 		}
 
