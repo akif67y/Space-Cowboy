@@ -325,6 +325,7 @@ void iKeyboard(unsigned char key) {
 		else if( key == '\r'){
 			savescore(newplayer, len);
 			strcpy(showname, "");
+			gamestate = 1;
 
 		}
 
@@ -409,7 +410,7 @@ void spaceshipgenerate(){  //
 		
 		
 		
-		for(int j = 0; j < 1 ; j++){  // generating boulder at the start
+		for(int j = 0; j < 2 ; j++){  // generating boulder at the start
 			
 			if(rocket[j].health <= 0){
 
@@ -431,7 +432,7 @@ void spaceshipgenerate(){  //
 	
 	//changing exosting rocket x coordinate
 	
-	for(int i = 0; i < 1 ; i++){  // i can make it one loop
+	for(int i = 0; i < 2 ; i++){  // i can make it one loop
 
 		if(rocket[i].health > 0){
 
@@ -491,70 +492,7 @@ void spaceshipgenerate(){  //
 
 	}
 
-	int t = rand() % 2;
-	int p = rand() % 4;
-	if(t == 1){
-		for(int j = 0, k = 0; j < 3; j++){  // generating boulder at the start
-			if(k == p) break;
-			if(bouldercheck[j] == 0){
 
-			bouldercheck[j] = 1;
-			boulderCoordinate[j].x = 0 + rand() % 600;
-			boulderCoordinate[j].y = 575;
-			k++;
-			
-			}
-		}
-		
-	}
-		for(int i = 0; i < 3 ; i++){
-		int s = rand() % 2;   //changing existing boulder coordinate
-		
-		if(s == 0){
-			boulderCoordinate[i].x = boulderCoordinate[i].x + 50  ;
-		}
-		else {
-			boulderCoordinate[i].x = boulderCoordinate[i].x - 50  ;
-		}
-		
-		if(boulderCoordinate[i].x >= 990) boulderCoordinate[i].x = 990;  //ekta arektake hit korleo direction change kora uchit
-		if(boulderCoordinate[i].x < 10) boulderCoordinate[i]. x = 0;
-		boulderCoordinate[i].y = boulderCoordinate[i].y - 50;
-		if(boulderCoordinate[i].y < 5){
-			bouldercheck[i] = 0;  //removing it when reaches the end of the screen;
-		}
-		}
-
-		int f = rand() % 7;
-	if(f == 3 && shild.status == 0){
-		shild.x = 10 + rand() % 500;
-		shild.y = 590;
-		shild.status = 1;
-	}
-	else if(f == 2 && helth.status == 0){
-		helth.x = 10 + rand() % 500;
-		helth.y = 590;
-		helth.status = 1;
-	}
-	else if(f == 6 && boost.status == 0){
-		boost.x = 10 + rand() % 500;
-		boost.y = 590;
-		boost.status = 1;
-	}
-
-	if(shild.status == 1){
-		shild.y = shild.y - 50;
-		if(shild.y < 5) shild.status = 0;
-	}
-	if(helth.status == 1){
-		helth.y = helth.y - 50;
-		if(helth.y < 5) helth.status = 0;
-	}
-	if(boost.status == 1){
-		boost.y = boost.y - 50;
-		if(boost.y < 5) boost.status = 0;
-	}
-	
 	}
 		
 	
@@ -682,7 +620,8 @@ void drawarena2(){
 	iFilledRectangle(0,0,1000,600);
 		if(pause){
 		iSetColor(255,255,255);
-		iText(450,450, "Paused", GLUT_BITMAP_HELVETICA_18);
+		iShowBMP2(0,0,"bmp_outputs//pause.bmp",255);
+	
 		return;
 	}
 	iShowBMP2(0,0, "bmp_outputs//arena2.bmp", 0);
@@ -706,7 +645,7 @@ void drawarena2(){
 	}
 	}
 
-	for(int i = 0; i < 1; i++){
+	for(int i = 0; i < 2; i++){
 		if(rocket[i].health > 0){  // it will work on bouldercheck status
 		
 		iShowBMP2(rocket[i].x, rocket[i].y,"bmp_outputs//enemy.bmp",0);
@@ -759,7 +698,9 @@ void drawStartpage(){
 	iFilledRectangle(0,0,1000,600);
 		if(pause){
 		iSetColor(255,255,255);
-		iText(450,450, "Paused", GLUT_BITMAP_HELVETICA_18);
+		
+		iShowBMP2(0,0,"bmp_outputs//pause.bmp",0);
+	
 		return;
 	}
 	iShowBMP2(0,0, "bmp_outputs//arena1.bmp", 0);
@@ -843,7 +784,7 @@ void bulletchange(){
 }
 void asteriodgenerate(){
 // eita execute howar jonno condition deya lagbe(differenent arena te gele eita execute hobena)
-if(gamestate == 6){
+if(gamestate == 6 || gamestate == 7){
 	int t = rand() % 2;
 	int p = rand() % 4;
 	if(t == 1){
@@ -862,7 +803,11 @@ if(gamestate == 6){
 	}
 	
 
-			int f = rand() % 7;
+
+	}}
+void tokengenerate(){
+	if(gamestate == 6 || gamestate == 7){
+			int f = rand() % 20;
 	if(f == 3 && shild.status == 0){
 		shild.x = 10 + rand() % 500;
 		shild.y = 590;
@@ -878,12 +823,9 @@ if(gamestate == 6){
 		boost.y = 590;
 		boost.status = 1;
 	}
+	}
+}
 
-	
-
-	
-	
-	}}
 	void asteroidCoordinatechange(){
 		if(gamestate == 6){
 		
@@ -896,22 +838,26 @@ if(gamestate == 6){
 		}
 
 
-	if(shild.status == 1){
-		shild.y = shild.y - 8;
+	
+
+	}}
+	void tokencoordinatechange(){
+		if(gamestate == 6 || gamestate == 7){
+		if(shild.status == 1){
+		shild.y = shild.y - 5;
 		if(shild.y < 10) shild.status = 0;
 	}
 	if(helth.status == 1){
-		helth.y = helth.y - 8;
+		helth.y = helth.y - 5;
 		if(helth.y < 10) helth.status = 0;
 	}
 	if(boost.status == 1){
-		boost.y = boost.y - 8;
+		boost.y = boost.y - 5;
 		if(boost.y < 10) boost.status = 0;
-	}
-
 	}}
+	}
 	void bouldercoordinatechange(){
-		if(gamestate == 6){
+		if(gamestate == 6 || gamestate == 7){
 
 		
 			for(int i = 0; i < 3 ; i++){
@@ -1177,7 +1123,7 @@ void collisionshipresult(){
 			boulderCoordinate[j].health = 10;
 		}
 	}
-	for(int i = 0; i< 1; i++){
+	for(int i = 0; i< 2; i++){
 		if(rocket[i].health <= 0){
 			score += 40;
 			iShowBMP2(rocket[i].x, rocket[i].y, "bmp_outputs//collision_effect.bmp",0);
@@ -1267,7 +1213,9 @@ int main() {
 	iSetTimer(280, asteriodgenerate);
 	iSetTimer(30, asteroidCoordinatechange);
 	iSetTimer(30, bouldercoordinatechange);
+	iSetTimer(500, tokengenerate);
 	iSetTimer(250, spaceshipgenerate);
+	iSetTimer(15, tokencoordinatechange);
 	//place your own initialization codes here.
 		if(music_on){
 			PlaySound(TEXT("music.wav"), NULL , SND_LOOP|SND_ASYNC);

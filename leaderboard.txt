@@ -26,3 +26,9 @@ Saklain 2980
 kif 180
 Akif 1040
 akif 610
+akif 450
+drim 630
+yo 460
+uma 280
+drim 90
+drim 90
