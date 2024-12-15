@@ -36,6 +36,7 @@ void spaceshipgenerate();
 
 
 bool music_on = true;
+bool pause = false;
 int healthcount = 0;
 int boostcount = 0;
 
@@ -49,7 +50,7 @@ man entry[MAX];
 
 int sorted = 0;
 int gunpower = 10;
-int damage = 10;
+int damage = 20;
 int damagecount = 0;
 int score = 0;
 typedef struct{
@@ -274,10 +275,20 @@ void iMouse(int button, int state, int mx, int my) {
 void iKeyboard(unsigned char key) {
 	
 	if(gamestate == 6 || gamestate == 7){
-		if(key == '\b'){
+		if(key == 'p'){
+			if(pause == true){
+				pause = false;
+			}
+			else{
+				pause = true;
+			}
+
+		}
+
+	else if(key == '\b'){
 			gamestate = 1;
 		}
-	if( key == 'd'){
+	else if( key == 'd'){
 		int t = hero.x + 10;
 		if(t > 900){
 			hero.x = 900;
@@ -397,7 +408,7 @@ void spaceshipgenerate(){  //
 		
 		
 		
-		for(int j = 0; j < 2 ; j++){  // generating boulder at the start
+		for(int j = 0; j < 1 ; j++){  // generating boulder at the start
 			
 			if(rocket[j].health <= 0){
 
@@ -419,7 +430,7 @@ void spaceshipgenerate(){  //
 	
 	//changing exosting rocket x coordinate
 	
-	for(int i = 0; i < 2 ; i++){  // i can make it one loop
+	for(int i = 0; i < 1 ; i++){  // i can make it one loop
 
 		if(rocket[i].health > 0){
 
@@ -583,7 +594,7 @@ void collisionship(){
 		for(int j = 0; j < 3;j++){
 			if(bouldercheck[j] == 1){
 				if(( boulderCoordinate[j].x + 60 >= hero.x && boulderCoordinate[j].x <= hero.x + 105) &&( boulderCoordinate[j].y <= hero.y + 80 )){
-					hero.health -= damage /2;
+					hero.health -= damage ;
 					if(damagecount == 0){
 						iShowBMP2(boulderCoordinate[j].x , boulderCoordinate[j].y , "bmp_outputs//collision.bmp",0);
 					}
@@ -638,7 +649,7 @@ void healthcollision(){
 
 		if(helth.status == 1){
 			if(( helth.x + 30 >= hero.x && helth.x <= hero.x + 105) &&( helth.y <= hero.y + 76  && helth.y + 30 >= hero.y)){
-				hero.health = hero.health + 100;
+				hero.health = hero.health + 50;
 				helth.status = 0;
 				healthcount = 100;
 			}
@@ -666,8 +677,13 @@ void healthcollision(){
 
 void drawarena2(){
 
-	iSetColor(128,128,128);
+	iSetColor(0,0,0);
 	iFilledRectangle(0,0,1000,600);
+		if(pause){
+		iSetColor(255,255,255);
+		iText(450,450, "Paused", GLUT_BITMAP_HELVETICA_18);
+		return;
+	}
 	iShowBMP2(0,0, "bmp_outputs//arena2.bmp", 0);
 	if(shi.shiptype == 1){
 		if(damagecount != 0){
@@ -689,7 +705,7 @@ void drawarena2(){
 	}
 	}
 
-	for(int i = 0; i < 2; i++){
+	for(int i = 0; i < 1; i++){
 		if(rocket[i].health > 0){  // it will work on bouldercheck status
 		
 		iShowBMP2(rocket[i].x, rocket[i].y,"bmp_outputs//enemy.bmp",0);
@@ -716,7 +732,7 @@ void drawarena2(){
 	}
 		if(healthcount > 0){
 		iSetColor(255,0,0);
-		iText(450,450,"GOOD JOB! HEALTH + 100", GLUT_BITMAP_HELVETICA_12);
+		iText(450,450,"GOOD JOB! HEALTH + 50", GLUT_BITMAP_HELVETICA_12);
 		healthcount--;
 	}
 	if(boostcount > 0){
@@ -738,8 +754,13 @@ void drawarena2(){
 	
 void drawStartpage(){
 	// srand(time(NULL));
-	iSetColor(128,128,128);
+	iSetColor(0,0,0);
 	iFilledRectangle(0,0,1000,600);
+		if(pause){
+		iSetColor(255,255,255);
+		iText(450,450, "Paused", GLUT_BITMAP_HELVETICA_18);
+		return;
+	}
 	iShowBMP2(0,0, "bmp_outputs//arena1.bmp", 0);
 	if(shi.shiptype == 1){
 		if(damagecount != 0){
@@ -770,7 +791,7 @@ void drawStartpage(){
 	}
 	if(healthcount > 0){
 		iSetColor(255,0,0);
-		iText(450,450,"GOOD JOB! HEALTH + 100", GLUT_BITMAP_HELVETICA_12);
+		iText(450,450,"GOOD JOB! HEALTH + 50", GLUT_BITMAP_HELVETICA_12);
 		healthcount--;
 	}
 	if(boostcount > 0){
@@ -842,22 +863,22 @@ if(gamestate == 6){
 		int s = rand() % 2;   //changing existing boulder coordinate
 		
 		if(s == 0){
-			boulderCoordinate[i].x = boulderCoordinate[i].x + 50  ;
+			boulderCoordinate[i].x = boulderCoordinate[i].x + 30  ;
 		}
 		else {
-			boulderCoordinate[i].x = boulderCoordinate[i].x - 50  ;
+			boulderCoordinate[i].x = boulderCoordinate[i].x - 30  ;
 		}
 		
 		if(boulderCoordinate[i].x >= 990) boulderCoordinate[i].x = 990;  //ekta arektake hit korleo direction change kora uchit
 		if(boulderCoordinate[i].x < 10) boulderCoordinate[i]. x = 0;
-		boulderCoordinate[i].y = boulderCoordinate[i].y - 50;
+		boulderCoordinate[i].y = boulderCoordinate[i].y - 30;
 		if(boulderCoordinate[i].y < 5){
 			bouldercheck[i] = 0;  //removing it when reaches the end of the screen;
 		}
 		}
 
 		for(int i = 0; i < 4; i++){
-			now[i].y = now[i].y - 70;
+			now[i].y = now[i].y - 30;
 			// noshto hoye geleo etai korbo(health 0 hoile)
 			if(now[i]. y < 5) now[i].y = 598;
 		
@@ -898,8 +919,6 @@ if(gamestate == 6){
 	
 	
 	}
-
-
 
 void drawMusicpage(){
 	iSetColor(128,128,128);
@@ -981,7 +1000,7 @@ for(int l = 0; l < 5; l++ ){
 	
 
  
-	//entry theke top 5 print korbo;
+	//entry theke top 5 print korbo;		
 
 
 
@@ -1077,7 +1096,7 @@ for(int i = 0; i < 60; i++){
 		}
 		if(damagecount != 0){ damagecount--;}
 		else{
-			damage = 10;
+			damage = 20;
 		}
 		if(shild.status == 1){
 			if(( shild.x + 30 >= hero.x && shild.x <= hero.x + 105) &&( shild.y <= hero.y + 30  && shild.y >= hero.y)){
@@ -1117,7 +1136,7 @@ void collisionshipresult(){
 			boulderCoordinate[j].health = 10;
 		}
 	}
-	for(int i = 0; i< 2; i++){
+	for(int i = 0; i< 1; i++){
 		if(rocket[i].health <= 0){
 			score += 40;
 			iShowBMP2(rocket[i].x, rocket[i].y, "bmp_outputs//collision_effect.bmp",0);
@@ -1204,7 +1223,7 @@ int main() {
 	
 	srand(time(NULL));
 	first();
-	iSetTimer(300, asteriodgenerate);
+	iSetTimer(180, asteriodgenerate);
 	iSetTimer(250, spaceshipgenerate);
 	//place your own initialization codes here.
 		if(music_on){

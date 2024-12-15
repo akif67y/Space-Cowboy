@@ -20,3 +20,8 @@ Akif 100
 hey 10
 ryan gosling 170
 Akif 380
+akif 1960
+Saklain 1810
+Saklain 2980
+kif 180
+Akif 1040
