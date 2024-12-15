@@ -19,3 +19,4 @@ Akif 2160
 Akif 100
 hey 10
 ryan gosling 170
+Akif 380
