@@ -410,7 +410,7 @@ void spaceshipgenerate(){  //
 		
 		
 		
-		for(int j = 0; j < 2 ; j++){  // generating boulder at the start
+		for(int j = 0; j < 1 ; j++){  // generating boulder at the start
 			
 			if(rocket[j].health <= 0){
 
@@ -432,7 +432,7 @@ void spaceshipgenerate(){  //
 	
 	//changing exosting rocket x coordinate
 	
-	for(int i = 0; i < 2 ; i++){  // i can make it one loop
+	for(int i = 0; i < 1 ; i++){  // i can make it one loop
 
 		if(rocket[i].health > 0){
 
@@ -448,14 +448,23 @@ void spaceshipgenerate(){  //
 
 		// }
 		if(i == 0){
-		if(rocket[i].x < 10){
+		if(rocket[i].x < 10 ){
 			rocket[i].x = 10 ;
 			rocket[i].move = 1;
 		}
-		else if(rocket[i].x > 445 ) {
-			rocket[i].x = 445;
+		else if(rocket[i].x > 990 ) {
+			rocket[i].x = 990;
 			rocket[i].move = -1;
 		}
+		if(rocket[i].x < hero.x ){
+			
+			rocket[i].move = 1;
+		}
+		else if(rocket[i].x > hero.x ) {
+			
+			rocket[i].move = -1;
+		}
+
 		// else if(random % 50 == 0){
 		// 	random++;
 		// 	rocket[i].move = 0;
@@ -469,6 +478,14 @@ void spaceshipgenerate(){  //
 		}
 		else if(rocket[i].x > 900 ) {
 			rocket[i].x = 900;
+			rocket[i].move = -1;
+		}
+			if(rocket[i].x < hero.x){
+			
+			rocket[i].move = 1;
+		}
+		else if(rocket[i].x > hero.x ) {
+			
 			rocket[i].move = -1;
 		}
 		// else if(random % 50 == 0){
@@ -645,7 +662,7 @@ void drawarena2(){
 	}
 	}
 
-	for(int i = 0; i < 2; i++){
+	for(int i = 0; i < 1; i++){
 		if(rocket[i].health > 0){  // it will work on bouldercheck status
 		
 		iShowBMP2(rocket[i].x, rocket[i].y,"bmp_outputs//enemy.bmp",0);
@@ -1123,7 +1140,7 @@ void collisionshipresult(){
 			boulderCoordinate[j].health = 10;
 		}
 	}
-	for(int i = 0; i< 2; i++){
+	for(int i = 0; i< 1; i++){
 		if(rocket[i].health <= 0){
 			score += 40;
 			iShowBMP2(rocket[i].x, rocket[i].y, "bmp_outputs//collision_effect.bmp",0);
