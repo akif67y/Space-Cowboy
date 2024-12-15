@@ -25,3 +25,4 @@ Saklain 1810
 Saklain 2980
 kif 180
 Akif 1040
+akif 610

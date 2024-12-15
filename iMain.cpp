@@ -82,6 +82,7 @@ typedef struct play{
 	int x;
 	int y;
 	int health;
+	int move;
 }player;
 
 player hero;
@@ -859,30 +860,7 @@ if(gamestate == 6){
 		}
 		
 	}
-		for(int i = 0; i < 3 ; i++){
-		int s = rand() % 2;   //changing existing boulder coordinate
-		
-		if(s == 0){
-			boulderCoordinate[i].x = boulderCoordinate[i].x + 30  ;
-		}
-		else {
-			boulderCoordinate[i].x = boulderCoordinate[i].x - 30  ;
-		}
-		
-		if(boulderCoordinate[i].x >= 990) boulderCoordinate[i].x = 990;  //ekta arektake hit korleo direction change kora uchit
-		if(boulderCoordinate[i].x < 10) boulderCoordinate[i]. x = 0;
-		boulderCoordinate[i].y = boulderCoordinate[i].y - 30;
-		if(boulderCoordinate[i].y < 5){
-			bouldercheck[i] = 0;  //removing it when reaches the end of the screen;
-		}
-		}
-
-		for(int i = 0; i < 4; i++){
-			now[i].y = now[i].y - 30;
-			// noshto hoye geleo etai korbo(health 0 hoile)
-			if(now[i]. y < 5) now[i].y = 598;
-		
-		}
+	
 
 			int f = rand() % 7;
 	if(f == 3 && shild.status == 0){
@@ -901,24 +879,83 @@ if(gamestate == 6){
 		boost.status = 1;
 	}
 
+	
+
+	
+	
+	}}
+	void asteroidCoordinatechange(){
+		if(gamestate == 6){
+		
+
+		for(int i = 0; i < 4; i++){
+			now[i].y = now[i].y - 5;
+			// noshto hoye geleo etai korbo(health 0 hoile)
+			if(now[i]. y < 5) now[i].y = 598;
+		
+		}
+
+
 	if(shild.status == 1){
-		shild.y = shild.y - 80;
+		shild.y = shild.y - 8;
 		if(shild.y < 10) shild.status = 0;
 	}
 	if(helth.status == 1){
-		helth.y = helth.y - 80;
+		helth.y = helth.y - 8;
 		if(helth.y < 10) helth.status = 0;
 	}
 	if(boost.status == 1){
-		boost.y = boost.y - 80;
+		boost.y = boost.y - 8;
 		if(boost.y < 10) boost.status = 0;
 	}
 
-	}
+	}}
+	void bouldercoordinatechange(){
+		if(gamestate == 6){
+
+		
+			for(int i = 0; i < 3 ; i++){
+		int s = rand() % 3;   //changing existing boulder coordinate
+		
+		if(boulderCoordinate[i].move == -1){
+			boulderCoordinate[i].x = boulderCoordinate[i].x - 5  ;
+		}
+		else if(boulderCoordinate[i].move == 1) {
+			boulderCoordinate[i].x = boulderCoordinate[i].x + 5  ;
+		}
+		
+		if(boulderCoordinate[0].x >= 330) {
+			boulderCoordinate[0].x = 330;
+			boulderCoordinate[0].move = -1; }
+			 //ekta arektake hit korleo direction change kora uchit
+		if(boulderCoordinate[0].x < 10) {
+			boulderCoordinate[0]. x = 0;
+			boulderCoordinate[0].move = 1; 
+			}
+			if(boulderCoordinate[1].x >= 660) {
+			boulderCoordinate[1].x = 660;
+			boulderCoordinate[1].move = -1; }
+			 //ekta arektake hit korleo direction change kora uchit
+		if(boulderCoordinate[1].x < 330) {
+			boulderCoordinate[1]. x = 330;
+			boulderCoordinate[1].move = 1; 
+			}
+			if(boulderCoordinate[2].x >= 990) {
+			boulderCoordinate[2].x = 990;
+			boulderCoordinate[2].move = -1; }
+			 //ekta arektake hit korleo direction change kora uchit
+		if(boulderCoordinate[2].x < 660) {
+			boulderCoordinate[2]. x = 660;
+			boulderCoordinate[2].move = 1; 
+			}
+		boulderCoordinate[i].y = boulderCoordinate[i].y - 5;
+		if(boulderCoordinate[i].y < 5){
+			bouldercheck[i] = 0;  //removing it when reaches the end of the screen;
+		}
+		}
+	}}
 
 	
-	
-	}
 
 void drawMusicpage(){
 	iSetColor(128,128,128);
@@ -1027,7 +1064,11 @@ void first(){
 
 	for(int i = 0; i < 3; i++){
 		boulderCoordinate[i].health = 10;
+		
 	}
+	boulderCoordinate[0].move = 1;
+	boulderCoordinate[1].move = -1;
+	boulderCoordinate[2].move = 1;
 
 	are.place = 0; 
 	are.check = 0;
@@ -1223,7 +1264,9 @@ int main() {
 	
 	srand(time(NULL));
 	first();
-	iSetTimer(180, asteriodgenerate);
+	iSetTimer(280, asteriodgenerate);
+	iSetTimer(30, asteroidCoordinatechange);
+	iSetTimer(30, bouldercoordinatechange);
 	iSetTimer(250, spaceshipgenerate);
 	//place your own initialization codes here.
 		if(music_on){
